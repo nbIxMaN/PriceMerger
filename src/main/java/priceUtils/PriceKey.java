@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class PriceKey {
-    String productCode; // код товара
-    int number; // номер цены
-    int depart; // номер отдела
+    private String productCode; // код товара
+    private int number; // номер цены
+    private int depart; // номер отдела
 }

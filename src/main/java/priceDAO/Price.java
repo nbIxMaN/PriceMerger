@@ -12,13 +12,13 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "id")
 public class Price implements Comparable<Price>{
-    long id; // идентификатор в БД
-    String productCode; // код товара
-    int number; // номер цены
-    int depart; // номер отдела
-    Date begin; // начало действия
-    Date end; // конец действия
-    long value; // значение цены в копейках
+    private long id; // идентификатор в БД
+    private String productCode; // код товара
+    private int number; // номер цены
+    private int depart; // номер отдела
+    private Date begin; // начало действия
+    private Date end; // конец действия
+    private long value; // значение цены в копейках
 
     @Override
     public int compareTo(Price price) {
