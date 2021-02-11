@@ -1,0 +1,104 @@
+package src.priceTest;
+
+import priceUtils.PriceMergeUtils;
+import org.junit.Assert;
+import org.junit.Test;
+import priceDAO.Price;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Calendar;
+
+public class NotCrossingPriceTest {
+
+    @Test
+    public void emptyListTest() {
+        List<Price> prices1 = new ArrayList<>();
+        List<Price> prices2 = new ArrayList<>();
+        Collection<Price> emptyPrices = new ArrayList<>();
+        Collection<Price> finalPrices = PriceMergeUtils.mergeCrossingPrices(prices1, prices2);
+        Assert.assertEquals(emptyPrices, finalPrices);
+    }
+
+    @Test
+    public void firstListEmptyTest() {
+        List<Price> prices1 = new ArrayList<>();
+        List<Price> prices2 = new ArrayList<>();
+        prices2.add(new Price(1,
+                "122856",
+                1,
+                1,
+                new Date(113, Calendar.JANUARY, 1, 0, 0, 0),
+                new Date(113, Calendar.JANUARY, 31, 23, 59, 59),
+                11000));
+        Collection<Price> finalPrices = PriceMergeUtils.mergeCrossingPrices(prices1, prices2);
+        Assert.assertEquals(prices2, finalPrices);
+    }
+
+    @Test
+    public void secondListEmptyTest() {
+        List<Price> prices1 = new ArrayList<>();
+        List<Price> prices2 = new ArrayList<>();
+        prices1.add(new Price(1,
+                "122856",
+                1,
+                1,
+                new Date(113, Calendar.JANUARY, 1, 0, 0, 0),
+                new Date(113, Calendar.JANUARY, 31, 23, 59, 59),
+                11000));
+        Collection<Price> finalPrices = PriceMergeUtils.mergeCrossingPrices(prices1, prices2);
+        Assert.assertEquals(prices1, finalPrices);
+    }
+
+    @Test
+    public void notCrossingListWithEqualsPrice() {
+        List<Price> prices1 = new ArrayList<>();
+        List<Price> prices2 = new ArrayList<>();
+        prices1.add(new Price(1,
+                "122856",
+                1,
+                1,
+                new Date(113, Calendar.JANUARY, 1, 0, 0, 0),
+                new Date(113, Calendar.JANUARY, 31, 23, 59, 59),
+                11000));
+        prices2.add(new Price(1,
+                "122856",
+                1,
+                1,
+                new Date(113, Calendar.FEBRUARY, 1, 0, 0, 0),
+                new Date(113, Calendar.FEBRUARY, 31, 23, 59, 59),
+                11000));
+        List<Price> correctPrices = new ArrayList<>();
+        correctPrices.addAll(prices1);
+        correctPrices.addAll(prices2);
+        Collection<Price> finalPrices = PriceMergeUtils.mergeCrossingPrices(prices1, prices2);
+        Assert.assertEquals(correctPrices, finalPrices);
+    }
+
+    @Test
+    public void notCrossingListWithNotEqualsPrice() {
+        List<Price> prices1 = new ArrayList<>();
+        List<Price> prices2 = new ArrayList<>();
+        prices1.add(new Price(1,
+                "122856",
+                1,
+                1,
+                new Date(113, Calendar.JANUARY, 1, 0, 0, 0),
+                new Date(113, Calendar.JANUARY, 31, 23, 59, 59),
+                11000));
+        prices2.add(new Price(1,
+                "122856",
+                1,
+                1,
+                new Date(113, Calendar.FEBRUARY, 1, 0, 0, 0),
+                new Date(113, Calendar.FEBRUARY, 31, 23, 59, 59),
+                10000));
+        List<Price> correctPrices = new ArrayList<>();
+        correctPrices.addAll(prices1);
+        correctPrices.addAll(prices2);
+        Collection<Price> finalPrices = PriceMergeUtils.mergeCrossingPrices(prices1, prices2);
+        Assert.assertEquals(correctPrices, finalPrices);
+    }
+}
